@@ -26,7 +26,7 @@ namespace SurfboardStore.Pages.Clients
                                 clientInfo.id = "" + reader.GetInt32(0);
                                 clientInfo.name = reader.GetString(1);
                                 clientInfo.email = reader.GetString(2);
-                                clientInfo.Phone = reader.GetString(3);
+                                clientInfo.phone = reader.GetString(3);
                                 clientInfo.address = reader.GetString(4);
                                 clientInfo.created_at = reader.GetDateTime(5).ToString();
 
@@ -48,7 +48,7 @@ namespace SurfboardStore.Pages.Clients
         public String id;
         public String name;
         public String email;
-        public String Phone;
+        public String phone;
         public String address;
         public String created_at;
     }
