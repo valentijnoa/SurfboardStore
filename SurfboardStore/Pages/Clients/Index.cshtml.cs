@@ -29,6 +29,8 @@ namespace SurfboardStore.Pages.Clients
                                 clientInfo.phone = reader.GetString(3);
                                 clientInfo.address = reader.GetString(4);
                                 clientInfo.created_at = reader.GetDateTime(5).ToString();
+                                clientInfo.width = reader.GetString(6);
+                                clientInfo.length = reader.GetString(7);
 
                                 listClients.Add(clientInfo);
                             }
@@ -51,5 +53,7 @@ namespace SurfboardStore.Pages.Clients
         public String phone;
         public String address;
         public String created_at;
+        public String width;
+        public String length;
     }
 }

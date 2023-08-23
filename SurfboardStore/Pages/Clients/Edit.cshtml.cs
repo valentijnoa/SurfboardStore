@@ -34,6 +34,8 @@ namespace SurfboardStore.Pages.Clients
                                 clientInfo.email = reader.GetString(2);
                                 clientInfo.phone = reader.GetString(3);
                                 clientInfo.address = reader.GetString(4);
+                                clientInfo.width = reader.GetString(5);
+                                clientInfo.length = reader.GetString(6);
                             }
                         }
                     }
@@ -51,13 +53,25 @@ namespace SurfboardStore.Pages.Clients
             clientInfo.email = Request.Form["email"];
             clientInfo.phone = Request.Form["phone"];
             clientInfo.address = Request.Form["address"];
+            clientInfo.width = Request.Form["width"];
+            clientInfo.length = Request.Form["length"];
 
             if (clientInfo.id.Length == 0 || clientInfo.name.Length == 0 ||
                 clientInfo.email.Length == 0 || clientInfo.phone.Length == 0 ||
-                clientInfo.address.Length == 0)
+                clientInfo.address.Length == 0 || clientInfo.width.Length == 0 || 
+                clientInfo.length.Length == 0)
             {
                 errorMessage = "Please fill in all the fields before proceeding";
                 return;
+            }
+
+            if (int.TryParse(clientInfo.length, out int parsedLength) && int.TryParse(clientInfo.width, out int parsedWidth))
+            {
+                if ((parsedLength < 260 || parsedLength > 370) || (parsedWidth < 65 || parsedWidth > 85))
+                {
+                    errorMessage = "Length or Width is outside the specified range. Length between 260 and 370, Width between 65 and 85";
+                    return;
+                }
             }
 
             try
@@ -67,7 +81,7 @@ namespace SurfboardStore.Pages.Clients
                 {
                     connection.Open();
                     String sql = "UPDATE clients " +
-                                 "SET name=@name, email=@email, phone=@phone, address=@address " +
+                                 "SET name=@name, email=@email, phone=@phone, address=@address, width=@width, length=@length " +
                                  "WHERE id=@id";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
@@ -76,6 +90,8 @@ namespace SurfboardStore.Pages.Clients
                         command.Parameters.AddWithValue("@email", clientInfo.email);
                         command.Parameters.AddWithValue("@phone", clientInfo.phone);
                         command.Parameters.AddWithValue("@address", clientInfo.address);
+                        command.Parameters.AddWithValue("@width", clientInfo.width);
+                        command.Parameters.AddWithValue("@length", clientInfo.length);
                         command.Parameters.AddWithValue("@id", clientInfo.id);
 
                         command.ExecuteNonQuery();

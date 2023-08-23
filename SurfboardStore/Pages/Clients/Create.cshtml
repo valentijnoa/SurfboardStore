@@ -4,7 +4,7 @@
 }
 
 <br />
-<h2>New Client</h2>
+<h2>New Job</h2>
 
 @if (Model.errorMessage.Length > 0)
 {
@@ -37,6 +37,18 @@
         <label class="col-sm-3 col-form-label">Address</label>
         <div class="col-sm-6">
             <input type="text" class="form-control" name="address" value="@Model.clientInfo.address" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Width</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="width" value="@Model.clientInfo.width" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Length</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="length" value="@Model.clientInfo.length" />
         </div>
     </div>
 

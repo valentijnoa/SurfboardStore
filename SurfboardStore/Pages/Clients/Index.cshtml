@@ -4,8 +4,8 @@
 }
 
 <br />
-<h2>List of Clients</h2>
-<a class="btn btn-primary btn-sm" href="/Clients/Create">New Client</a>
+<h2>List of jobs</h2>
+<a class="btn btn-primary btn-sm" href="/Clients/Create">New Job</a>
 <table class="table">
     <thead>
         <tr>
@@ -14,6 +14,8 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Address</th>
+            <th>Width</th>
+            <th>Length</th>
             <th>Created At</th>
             <th>Action</th>
         </tr>
@@ -27,6 +29,8 @@
                 <td>@item.email</td>
                 <td>@item.phone</td>
                 <td>@item.address</td>
+                <td>@item.width</td>
+                <td>@item.length</td>
                 <td>@item.created_at</td>
                 <td>
                     <a class="btn btn-primary btn-sm" href="/Clients/Edit?id=@item.id">Edit</a>
