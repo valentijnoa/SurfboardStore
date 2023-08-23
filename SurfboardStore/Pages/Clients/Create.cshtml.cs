@@ -21,6 +21,7 @@ namespace SurfboardStore.Pages.Clients
            clientInfo.address = Request.Form["address"];
            clientInfo.width = Request.Form["width"];
            clientInfo.length = Request.Form["length"];
+           clientInfo.agreement = Request.Form["agreement"];
 
             if (clientInfo.name.Length == 0  || clientInfo.phone.Length == 0 ||
                 clientInfo.phone.Length == 0 || clientInfo.address.Length == 0 ||
@@ -39,6 +40,12 @@ namespace SurfboardStore.Pages.Clients
                 }
             }
 
+            if (clientInfo.agreement != "yes" &&  clientInfo.agreement != "no")
+            {
+                errorMessage = "Type in yes or no for the agreement";
+                return;
+            }
+
             //save the data into the database
             try
             {
@@ -47,8 +54,8 @@ namespace SurfboardStore.Pages.Clients
                 {
                     connection.Open();
                     String sql = "INSERT INTO clients " +
-                                 "(name, email, phone, address, width, length) VALUES " +
-                                 "(@name, @email, @phone, @address, @width, @length);";
+                                 "(name, email, phone, address, width, length, agreement) VALUES " +
+                                 "(@name, @email, @phone, @address, @width, @length, @agreement);";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -58,6 +65,7 @@ namespace SurfboardStore.Pages.Clients
                         command.Parameters.AddWithValue("@address", clientInfo.address);
                         command.Parameters.AddWithValue("@width", clientInfo.width);
                         command.Parameters.AddWithValue("@length", clientInfo.length);
+                        command.Parameters.AddWithValue("@agreement", clientInfo.agreement);
 
                         command.ExecuteNonQuery();
                     }
@@ -69,7 +77,7 @@ namespace SurfboardStore.Pages.Clients
                 return;
             }
 
-            clientInfo.name = ""; clientInfo.email = ""; clientInfo.phone = ""; clientInfo.address = ""; clientInfo.width = ""; clientInfo.length = "";
+            clientInfo.name = ""; clientInfo.email = ""; clientInfo.phone = ""; clientInfo.address = ""; clientInfo.width = ""; clientInfo.length = ""; clientInfo.agreement = "";
             succesMessage = "New job added";
 
             Response.Redirect("/Clients/Index");

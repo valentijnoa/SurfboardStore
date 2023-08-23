@@ -34,8 +34,9 @@ namespace SurfboardStore.Pages.Clients
                                 clientInfo.email = reader.GetString(2);
                                 clientInfo.phone = reader.GetString(3);
                                 clientInfo.address = reader.GetString(4);
-                                clientInfo.width = reader.GetString(5);
-                                clientInfo.length = reader.GetString(6);
+                                clientInfo.width = reader.GetString(6);
+                                clientInfo.length = reader.GetString(7);
+                                clientInfo.agreement = reader.GetString(8);
                             }
                         }
                     }
@@ -55,6 +56,7 @@ namespace SurfboardStore.Pages.Clients
             clientInfo.address = Request.Form["address"];
             clientInfo.width = Request.Form["width"];
             clientInfo.length = Request.Form["length"];
+            clientInfo.agreement = Request.Form["agreement"];
 
             if (clientInfo.id.Length == 0 || clientInfo.name.Length == 0 ||
                 clientInfo.email.Length == 0 || clientInfo.phone.Length == 0 ||
@@ -74,6 +76,13 @@ namespace SurfboardStore.Pages.Clients
                 }
             }
 
+
+            if (clientInfo.agreement != "yes" && clientInfo.agreement != "no")
+            {
+                errorMessage = "Type in yes or no for the agreement";
+                return;
+            }
+
             try
             {
                 String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=surfdb;Integrated Security=True";
@@ -81,7 +90,7 @@ namespace SurfboardStore.Pages.Clients
                 {
                     connection.Open();
                     String sql = "UPDATE clients " +
-                                 "SET name=@name, email=@email, phone=@phone, address=@address, width=@width, length=@length " +
+                                 "SET name=@name, email=@email, phone=@phone, address=@address, width=@width, length=@length, agreement=@agreement " +
                                  "WHERE id=@id";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
@@ -92,6 +101,7 @@ namespace SurfboardStore.Pages.Clients
                         command.Parameters.AddWithValue("@address", clientInfo.address);
                         command.Parameters.AddWithValue("@width", clientInfo.width);
                         command.Parameters.AddWithValue("@length", clientInfo.length);
+                        command.Parameters.AddWithValue("@agreement", clientInfo.agreement);
                         command.Parameters.AddWithValue("@id", clientInfo.id);
 
                         command.ExecuteNonQuery();

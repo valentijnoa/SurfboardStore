@@ -31,6 +31,7 @@ namespace SurfboardStore.Pages.Clients
                                 clientInfo.created_at = reader.GetDateTime(5).ToString();
                                 clientInfo.width = reader.GetString(6);
                                 clientInfo.length = reader.GetString(7);
+                                clientInfo.agreement = reader.GetString(8);
 
                                 listClients.Add(clientInfo);
                             }
@@ -55,5 +56,6 @@ namespace SurfboardStore.Pages.Clients
         public String created_at;
         public String width;
         public String length;
+        public String agreement;
     }
 }
